@@ -106,6 +106,8 @@ class HcodeGrid {
 
             for (let name in data) {
 
+                this.options.onUpdateLoad(this.formUpdate, name, data);
+
             let input =  this.formUpdate.querySelector(`[name=${name}]`);
 
             switch (name) {
@@ -132,7 +134,7 @@ class HcodeGrid {
         btn.addEventListener('click', e => {
 
             this.fireEvent('beforeDeleteClick');
-            
+
             let data = this.getTrData(e);
 
             if (confirm(eval('`' + this.options.deleteMsg +  '`'))) {
