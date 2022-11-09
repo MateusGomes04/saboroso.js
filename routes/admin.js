@@ -9,7 +9,7 @@ var router = express.Router();
 moment.locale("pt-BR");
 
 
-router.use(function(req, res, next){
+router.use(function (req, res, next) {
 
     if (['/login'].indexOf(req.url) === -1 && !req.session.user) {
         res.redirect("/admin/login");
@@ -19,7 +19,7 @@ router.use(function(req, res, next){
 
 });
 
-router.use(function(req, res, next){
+router.use(function (req, res, next) {
 
     req.menus = admin.getMenus(req);
 
@@ -28,7 +28,7 @@ router.use(function(req, res, next){
 });
 
 
-router.get("/logout", function(req, res, next){
+router.get("/logout", function (req, res, next) {
 
     delete req.session.urser;
 
@@ -40,7 +40,7 @@ router.get("/", function (req, res, next) {
 
     admin.dashboard().then(data => {
 
-        res.render("admin/index", admin.getParams(req,{
+        res.render("admin/index", admin.getParams(req, {
             data
         }));
 
@@ -107,31 +107,31 @@ router.get("/menus", function (req, res, next) {
             data
         }));
 
-     });
+    });
 
 
 });
 
-router.post("/menus", function(req, res, next){
+router.post("/menus", function (req, res, next) {
 
-    menus.save(req.fields, req.files).then(results=>{
+    menus.save(req.fields, req.files).then(results => {
 
         res.send(results);
 
-    }).catch(err=>{
+    }).catch(err => {
 
         res.send(err);
 
     });
-});     
+});
 
-router.delete("/menus/:id", function(req, res, next){
+router.delete("/menus/:id", function (req, res, next) {
 
-    menus.delete(req.params.id).then(results=>{
+    menus.delete(req.params.id).then(results => {
 
         res.send(results);
 
-    }).catch(err=>{
+    }).catch(err => {
 
         res.send(err);
 
@@ -154,27 +154,27 @@ router.get("/reservations", function (req, res, next) {
 });
 
 
-router.post("/reservations", function(req, res, next){
+router.post("/reservations", function (req, res, next) {
 
-    reservations.save(req.fields, req.files).then(results=>{
+    reservations.save(req.fields, req.files).then(results => {
 
         res.send(results);
 
-    }).catch(err=>{
+    }).catch(err => {
 
         res.send(err);
 
     });
 
-});     
+});
 
-router.delete("/reservations/:id", function(req, res, next){
+router.delete("/reservations/:id", function (req, res, next) {
 
-    reservations.delete(req.params.id).then(results=>{
+    reservations.delete(req.params.id).then(results => {
 
         res.send(results);
 
-    }).catch(err=>{
+    }).catch(err => {
 
         res.send(err);
 
@@ -192,33 +192,48 @@ router.get("/users", function (req, res, next) {
 
     });
 
-    router.post("/users", function(req, res, next){
-    
-        users.save(req.fields).then(results=>{
-    
+    router.post("/users", function (req, res, next) {
+
+        users.save(req.fields).then(results => {
+
             res.send(results);
-    
-        }).catch(err=>{
-    
+
+        }).catch(err => {
+
             res.send(err);
-    
+
         });
-    
-    });  
-    
-     router.delete("/users", function(req, res, next){
-    
-        users.delete(req.params.id).then(results=>{
-    
+
+    });
+
+    router.post("/users/password-change", function (req, res, next) {
+
+        users.changePassword(req).then(results => {
+
             res.send(results);
-    
-        }).catch(err=>{
-    
-            res.send(err);
-    
+
+        }).catch(err => {
+
+            res.send({
+                error: err
+            });
+
         });
-    
-        });  
+    });
+
+    router.delete("/users", function (req, res, next) {
+
+        users.delete(req.params.id).then(results => {
+
+            res.send(results);
+
+        }).catch(err => {
+
+            res.send(err);
+
+        });
+
+    });
 
 });
 
