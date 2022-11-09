@@ -95,6 +95,25 @@ class Pagination {
 
         }
 
+        if (this.getCurrentPage() > 1) {
+            links.push({
+                text: '<',
+                href: '?' + this.getQueryString(object.assign({}, params, { page: this.getCurrentPage()-1 }))
+
+            });
+        }
+
+        if (this.getCurrentPage() < this.getTotalPages()) {
+
+            links.push({
+                text: '>',
+                href: '?' + this.getQueryString(object.assign({}, params, { page: this.getCurrentPage()+1 }))
+
+            });
+
+        }
+
+
         for (let x = nrstart; x <=nrend; x++) {
 
             links.push({
