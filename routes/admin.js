@@ -113,7 +113,7 @@ router.delete("/contacts/:id", function (req, res, next) {
 
 router.get("/emails", function (req, res, next) {
 
-    emails.getEmails().then(data=>{
+    emails.getEmails().then(data => {
 
         res.render("admin/emails", admin.getParams(req, {
             data
@@ -122,11 +122,11 @@ router.get("/emails", function (req, res, next) {
     });
 });
 
-router.delete("/email/:id", function(req, res, next){
+router.delete("/email/:id", function (req, res, next) {
 
-    emails.delete(req.params.id).then(results=>{
-            res.send(results);
-    }).catch(err=>{
+    emails.delete(req.params.id).then(results => {
+        res.send(results);
+    }).catch(err => {
         res.send(err);
     });
 
@@ -174,12 +174,19 @@ router.delete("/menus/:id", function (req, res, next) {
 
 router.get("/reservations", function (req, res, next) {
 
-    reservations.getReservations().then(data => {
+    let start = (req.query.start) ? req.query.start : moment().subtract(1, 'year').format("YYYY-MM-DD");
+    let end = (req.query.end) ? req.query.end : moment().format("YYYY-MM-DD");
+
+    reservations.getReservations(req).then(pag => {
 
         res.render("admin/reservations", admin.getParams(req, {
-            date: {},
-            data,
-            moment
+            date: {
+                start,
+                end
+            },
+            data: pag.data,
+            moment,
+            links: pag.links
         }));
 
     });

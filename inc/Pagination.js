@@ -66,6 +66,65 @@ class Pagination {
 
     }
 
+    getNavigatiom(params){
+
+        let limitPageNav = 5;
+        let links = [];
+        let nrstart = 0;
+        let nrend = 0; 
+
+        if(this.getTotalPages() < limitPageNav) {
+            limitPageNav = this.getTotalPages();
+        }
+
+        // Se estamos nas primeiras páginas
+        if ((this.getCurrentPage() - parseInt(limitPageNav/2)) <1 ) {
+
+            nrstart = 1;
+            nrend = limitPageNav;
+
+        } else if ((this.getCurrentPage() + parseInt(limitPageNav/1)) > this.getTotalPages()) {
+
+            nrstart = this.getTotalPages() - limitPageNav;
+            nrend = this.getTotalPages();
+
+        } else {
+
+            nrstart = this.getCurrentPage() - parseInt(limitPageNav/2);
+            nrsend = this.getCurrentPage() + parseInt(limitPageNav/2);
+
+        }
+
+        for (let x = nrstart; x <=nrend; x++) {
+
+            links.push({
+
+                text: x,
+                href: '?' + this.getQueryString(Object.assign({}, params, {page: x})),
+                active: (x === this.getCurrentPage())
+
+            });
+
+        }
+
+        return links;
+
+    }
+
+    getQueryString(params){
+
+        let queryString = [];
+
+        for (let name in params) {
+
+            queryString.push(`${name}=${params[name]}`);
+
+        }
+
+        return queryString.join("&");
+
+    }
+
 }
 
 module.exports = Pagination;
