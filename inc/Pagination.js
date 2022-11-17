@@ -61,7 +61,7 @@ class Pagination {
     }
 
     getTotalPages(){
-
+        
         return this.totalPages;
 
     }
@@ -76,7 +76,7 @@ class Pagination {
         if(this.getTotalPages() < limitPageNav) {
             limitPageNav = this.getTotalPages();
         }
-
+        
         // Se estamos nas primeiras páginas
         if ((this.getCurrentPage() - parseInt(limitPageNav/2)) <1 ) {
 

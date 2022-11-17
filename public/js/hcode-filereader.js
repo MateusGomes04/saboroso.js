@@ -44,7 +44,7 @@ class HcodeFileReader {
             reader.readAsDataURL(file);
 
         });
-
+        
     }
 
 }

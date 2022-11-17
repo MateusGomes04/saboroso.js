@@ -3,42 +3,47 @@ let path = require('path');
 
 module.exports = {
 
-    getMenus() {
+    getMenus(){
+
         return new Promise((resolve, reject) => {
+
             conn.query(`
             SELECT * FROM tb_menus ORDER BY title    
-             `, (err, results) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(results);
-            });
+             `, (err, results)=>{
+
+            if (err) {
+                reject(err);
+            }
+
+            resolve(results);
+
+             });
 
         });
     },
 
-    save(fields, files) {
+    save(fields, files){
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject)=>{
 
             fields.photo = `images/${path.parse(files.photo.path).base}`;
 
             let query, queryPhoto = '', params = [
-
                 fields.title,
                 fields.description,
                 fields.price
-
             ];
 
             if (files.photo.name) {
+
                 queryPhoto = ',photo = ?';
-                params.push(fields.photo);
+
+                 params.push(fields.photo);
 
             }
 
             if (parseInt(fields.id) > 0) {
-
+                
                 params.push(fields.id);
 
                 query = `
@@ -52,7 +57,7 @@ module.exports = {
 
             } else {
 
-                if (!files.photo.name) {
+                if(!files.photo.name) {
                     reject('Envia a foto do prato.');
                 }
 
@@ -62,7 +67,7 @@ module.exports = {
                 `;
             }
 
-            conn.query(query, params, (err, results) => {
+            conn.query(query, params,(err, results)=>{
 
                 if (err) {
                     reject(err)
@@ -73,7 +78,7 @@ module.exports = {
             });
 
         });
-
+        
     },
 
     delete(id){
@@ -95,7 +100,6 @@ module.exports = {
                 }
 
         });
-
 
     }
 

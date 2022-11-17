@@ -21,7 +21,7 @@ module.exports = {
         });
 
     },
-
+    
     delete(id){
 
         return new Promise((resolve, reject)=>{
@@ -51,21 +51,21 @@ module.exports = {
             if (!req.fields.email) {
                 reject("Prencha o e-mail.")
               } else {
-
+            
                 conn.query(`
                   INSERT INTO tb_emails (email) VALUES(?)
                 `, [
                   req.fields.email
                 ], (err, results)=>{
-
+            
                   if (err) {
                     reject(err.message);
                   } else {
                     resolve(results);
                   }
-
+            
                 });
-
+            
               }
 
         });

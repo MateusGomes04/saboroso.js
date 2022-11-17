@@ -2,7 +2,7 @@ var conn = require("./db");
 
 module.exports = {
 
-    render(req, res, error, success) {
+    render(req, res, error, success){
 
         res.render('contacts', {
             title: 'Contato - Restaurante Saboroso!',
@@ -11,68 +11,68 @@ module.exports = {
             body: req.body,
             error,
             success
-        });
+          });
 
     },
 
-    save(fields) {
+    save(fields){
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject)=>{
 
             conn.query(`
                 INSERT INTO tb_contacts (name, email, message)
                 VALUES(?, ?, ?)
-            `, [
-                fields.name,
-                fields.email,
-                fields.message
-            ], (err, results) => {
+            `,[
+            fields.name,
+            fields.email,
+            fields.message
+         ], (err, results)=>{
 
-                if (err) {
+            if (err) {
 
-                    reject(err);
+                reject(err);
 
-                } else {
+            } else {
 
-                    resolve(results);
+                resolve(results);
 
-                }
+            }
 
-            });
+         });
 
 
         });
 
     },
 
-    getContacts() {
+    getContacts(){
 
         return new Promise((resolve, reject) => {
 
             conn.query(`
             SELECT * FROM tb_contacts ORDER BY register DESC   
-             `, (err, results) => {
+             `, (err, results)=>{
 
-                if (err) {
-                    reject(err);
-                }
+            if (err) {
+                reject(err);
+            }
 
-                resolve(results);
+            resolve(results);
 
-            });
+             });
 
         });
     },
 
-    delete(id) {
+    delete(id){
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject)=>{
 
             conn.query(`
                 DELETE FROM  tb_contacts WHERE id = ?
-            `)[
+            `) [
                 id
-            ], (err, results) => {
+            ], (err, results)=>{
 
                 if (err) {
                     reject(err);
@@ -82,8 +82,8 @@ module.exports = {
 
             }
 
-        });
+    });
 
-    }
+}
 
 };

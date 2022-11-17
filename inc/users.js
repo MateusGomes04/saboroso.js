@@ -23,7 +23,7 @@ module.exports = {
             `, [
                 email
             ], (err, results)=>{
-
+                
                 if (err) {
                     reject(err);
                 } else {
@@ -42,10 +42,11 @@ module.exports = {
                     }
 
                 }
-
+        
             });
 
         })
+
     },
 
     getUsers(){
@@ -53,7 +54,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
 
             conn.query(`
-            SELECT * FROM tb_users ORDER BY name    
+            SELECT * FROM tb_users ORDER BY name   
              `, (err, results)=>{
 
             if (err) {
@@ -79,7 +80,7 @@ module.exports = {
             ];  
 
             if (parseInt(fields.id) > 0) {
-
+                
                 params.push(fields.id);
 
                 query = `
@@ -95,7 +96,7 @@ module.exports = {
                 INSERT INTO tb_users (name, email, password)
                 VALUES(?, ?, ?)
                 `;
-
+                
                 params.push(fields.password);
 
             }
@@ -111,7 +112,7 @@ module.exports = {
             });
 
         });
-
+        
     },
 
     delete(id){
@@ -155,7 +156,7 @@ module.exports = {
                         req.fields.password,
                         req.fields.id
                     ], (err, results)=>{
-
+                        
                         if (err) {
                             reject(err.message);
                         } else {
@@ -167,6 +168,7 @@ module.exports = {
             }
 
         });
+
     }
 
 };
